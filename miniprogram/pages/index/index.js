@@ -6,8 +6,7 @@ Page({
    */
   data: {
     banner: ['../../images/banner1.jpg', '../../images/banner2.jpg', '../../images/banner3.jpg'],
-    indexConfig: [
-      {
+    indexConfig: [{
         icon: '../../images/kuaidi.png',
         text: '快递代取',
         url: '../getExpress/getExpress'
@@ -56,13 +55,21 @@ Page({
   },
 
   toDetail(e) {
+    const userInfo = wx.getStorageSync('userInfo');
     const url = e.currentTarget.dataset.url;
-    wx.navigateTo({
-      url,
-    })
+    if (userInfo) {
+      wx.navigateTo({
+        url,
+      })
+    } else {
+      wx.showToast({
+        icon: 'none',
+        title: '请前往个人中心登录',
+      })
+    }
   },
 
-  handleClickNotice () {
+  handleClickNotice() {
     wx.showModal({
       title: '公告',
       content: '关注公众号可享订单推送-接单员请务必添加客服v: 18331092918'
@@ -78,7 +85,9 @@ Page({
       wx.cloud.callFunction({
         name: 'UserOpenId',
         success: (res) => {
-          const { openid } = res.result;
+          const {
+            openid
+          } = res.result;
           wx.setStorageSync('openid', openid);
         }
       })
@@ -89,48 +98,48 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    
+
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    
+
   }
 })

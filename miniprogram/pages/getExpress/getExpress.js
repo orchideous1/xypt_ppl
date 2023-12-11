@@ -66,7 +66,7 @@ Page({
         // 当前时间
         time: getTimeNow(),
         // 订单金额
-        money: that.money + that.addMoeny,
+        money: Number(that.money + that.addMoeny),
         // 订单状态
         state: '待帮助',
         // 收件地址
@@ -92,6 +92,9 @@ Page({
         },
         // 用户信息
         userInfo: that.userInfo,
+        // 用户手机号
+        phone: wx.getStorageSync('phone'),
+        createTime: db.serverDate()
       },
       success: (res) => {
         wx.switchTab({
@@ -134,10 +137,16 @@ Page({
           filePath: res.tempFilePaths[0],
           success: (res) => {
             let fileID = res.fileID;
-            this.setData({
-              codeImg: fileID,
+            wx.cloud.getTempFileURL({
+              fileList: [fileID],
+              success: (res) => {
+                this.setData({
+                  codeImg: res.fileList[0].tempFileURL,
+                })
+                wx.hideLoading();
+              }
             })
-            wx.hideLoading();
+
           }
         })
       },
@@ -176,13 +185,14 @@ Page({
   },
 
   selectAddress() {
-    wx.redirectTo({
-      url: '../address/address?url=getExpress',
+    wx.setStorageSync('urlNow', 'getExpress');
+    wx.navigateTo({
+      url: '../address/address',
     })
   },
 
   selectBusiness() {
-    wx.redirectTo({
+    wx.navigateTo({
       url: '../expressBusiness/expressBusiness?url=getExpress',
     })
   },
@@ -207,6 +217,7 @@ Page({
     } = e.currentTarget.dataset;
     this.setData({
       typeNow: id,
+      money: this.data.typeList[id].money
     })
     wx.showToast({
       icon: 'none',
@@ -268,7 +279,9 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    wx.switchTab({
+      url: '../index/index',
+    })
   },
 
   /**

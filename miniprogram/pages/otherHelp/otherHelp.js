@@ -41,7 +41,11 @@ Page({
           // 帮助内容
           helpContent,
         },
+        // 用户信息
         userInfo,
+        // 手机号
+        phone: wx.getStorageSync('phone'),
+        createTime: db.serverDate()
       },
       success: (res) => {
         wx.switchTab({
@@ -55,8 +59,9 @@ Page({
   },
 
   selectAddress() {
+    wx.setStorageSync('urlNow', 'otherHelp');
     wx.redirectTo({
-      url: '../address/address?url=otherHelp',
+      url: '../address/address',
     })
   },
   

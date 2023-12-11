@@ -52,6 +52,9 @@ Page({
         },
         // 用户信息
         userInfo,
+        // 手机号
+        phone: wx.getStorageSync('phone'),
+        createTime: db.serverDate()
       },
       success: (res) => {
         wx.switchTab({
@@ -77,8 +80,9 @@ Page({
   },
 
   selectAddress() {
+    wx.setStorageSync('urlNow', 'run')
     wx.redirectTo({
-      url: '../address/address?url=run',
+      url: '../address/address',
     })
   },
 

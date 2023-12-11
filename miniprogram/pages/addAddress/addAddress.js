@@ -56,8 +56,8 @@ Page({
           }
       }
       wx.setStorageSync('address', address);
-      wx.navigateTo({
-          url: '../address/address',
+      wx.navigateBack({
+          delta: 3
       })
   },
 

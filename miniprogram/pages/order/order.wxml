@@ -29,10 +29,17 @@
                 {{ item.info }}
             </view>
             <view class="address">
-                {{ item.state === '待帮助' ? '目的地：' + item.address : '订单已完成，相关信息已隐藏' }}
+                {{ item.state !== '已完成' ? '目的地：' + item.address : '订单已完成，相关信息已隐藏' }}
+            </view>
+            <view class="address" wx:if="{{ openid === item.receivePerson }}">
+                {{ item.state === '已帮助' && item.name === '快递代取'  ? '取件码:' + item.expressCode : '' }}
+            </view>
+            <view class="address" bindtap="callPhone" data-phone="{{ item.phone }}">
+                {{ item.state !== '已完成' ? '联系方式：' + item.phone : '' }}
             </view>
         </view>
         <view class="order_bottom">
+            <button wx:if="{{ item.codeImg }}" size="mini" type="primary" bindtap="showCodeImg" data-item="{{ item }}">查看取件码截图</button>
             <view class="money">
                 金额 ￥{{ item.money }}
             </view>
@@ -65,10 +72,19 @@
                 {{ item.info }}
             </view>
             <view class="address">
-                {{ item.state === '待帮助' ? '目的地：' + item.address : '订单已完成，相关信息已隐藏' }}
+                {{ item.state !== '已完成' ? '目的地：' + item.address : '订单已完成，相关信息已隐藏' }}
+            </view>
+            <view class="address" wx:if="{{ openid === item.receivePerson }}">
+                {{ item.state === '已帮助' && item.name === '快递代取'  ? '取件码:' + item.expressCode : '' }}
+            </view>
+            <view class="address" bindtap="callPhone" data-phone="{{ item.phone }}">
+                {{ item.state !== '已完成' ? '联系方式：' + item.phone : '' }}
             </view>
         </view>
         <view class="order_bottom">
+            <button type="warn" size="mini" style="margin-right: 20rpx;" bindtap="deleteOrder" data-id="{{ item._id }}">删除</button>
+            <button wx:if="{{ item.codeImg }}" size="mini" type="primary" bindtap="showCodeImg" data-item="{{ item }}">取件码</button>
+
             <view class="money">
                 金额 ￥{{ item.money }}
             </view>
@@ -111,7 +127,13 @@
                 {{ item.info }}
             </view>
             <view class="address">
-                {{ item.state === '待帮助' ? '目的地：' + item.address : '订单已完成，相关信息已隐藏' }}
+                {{ item.state !== '已完成' ? '目的地：' + item.address : '订单已完成，相关信息已隐藏' }}
+            </view>
+            <view class="address" wx:if="{{ openid === item.receivePerson }}">
+                {{ item.state === '已帮助' && item.name === '快递代取'  ? '取件码:' + item.expressCode : '' }}
+            </view>
+            <view class="address" bindtap="callPhone" data-phone="{{ item.phone }}">
+                {{ item.state !== '已完成' ? '联系方式：' + item.phone : '' }}
             </view>
         </view>
         <view class="order_bottom">
@@ -144,10 +166,18 @@
                 {{ item.info }}
             </view>
             <view class="address">
-                {{ item.state === '待帮助' ? '目的地：' + item.address : '订单已完成，相关信息已隐藏' }}
+                {{ item.state !== '已完成' ? '目的地：' + item.address : '订单已完成，相关信息已隐藏' }}
+            </view>
+            <view class="address" wx:if="{{ openid === item.receivePerson }}">
+                {{ item.state === '已帮助' && item.name === '快递代取'  ? '取件码:' + item.expressCode : '' }}
+            </view>
+            <view class="address" bindtap="callPhone" data-phone="{{ item.phone }}">
+                {{ item.state !== '已完成' ? '联系方式：' + item.phone : '' }}
             </view>
         </view>
         <view class="order_bottom">
+            <button wx:if="{{ item.codeImg }}" size="mini" type="primary" bindtap="showCodeImg" data-item="{{ item }}">查看取件码截图</button>
+
             <view class="money">
                 金额 ￥{{ item.money }}
             </view>

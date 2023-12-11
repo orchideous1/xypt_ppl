@@ -1,19 +1,5 @@
 // pages/person/person.js
 const db = wx.cloud.database();
-// TODO
-/**
- * 1. 在个人中心中添加审核接单申请的功能, 有通过和不通过两个选项
- * 2. 原则上每个用户只能申请一次接单员，前提是审核通过了，如果审核不通过，可以继续申请
- * 3. 在点击申请接单的函数中添加新的逻辑，分别判断当前用户是否申请过，如果申请过，通过结果来给定以不同的modal提示
- * 4. 如果没有提交过申请，在点击申请接单的时候无任何提示。
- *    提交过，且成功，提示您已是接单员。留在个人中心页面
- *    提交过，且失败，提示您之前提交的内容审核未通过，可以继续申请，然后跳转到申请的页面。
- *    提交过，还在审核中，提示您提交的内容还在申请，留在个人中心页面
- * 5. 新增存储管理员数据的数据库表，只有管理员进入个人中心才能看到审核接单申请那一项
- * 6. 订单页，在点击接单的时候增加判断逻辑，只有已经是接单员的用户才能接单
- * 7. 订单页, 我帮助的tab下, 增加筛选条件，应该订单状态是已完成才算我帮助的, 已帮助的不算, 分页那里的查询也需要增加这个筛选条件
- * 8. 订单页, 我帮助的tab下, 顶部增加当前用户已完成的订单数量总额和已完成的订单收益总和，用到了两个新的云数据库API
- */
 Page({
 
     /**
@@ -38,6 +24,14 @@ Page({
     },
 
     applyOrder() {
+        const userInfo = wx.getStorageSync('userInfo');
+        if (!userInfo) {
+            wx.showToast({
+              icon: 'none',
+              title: '请先登录!',
+            })
+            return;
+        }
         const {
             personReceiveState
         } = this.data;
@@ -107,8 +101,12 @@ Page({
                 cloudID: e.detail.cloudID,
             },
             success: (res) => {
+                console.log(res);
                 wx.setStorageSync('phone', res.result.list[0].data.phoneNumber);
             },
+            fail: (err) => {
+                console.log(err);
+            }
         })
     },
 
@@ -139,6 +137,7 @@ Page({
             adminID: wx.getStorageSync('openid')
         }).get({
             success: (res) => {
+                
                 this.setData({
                     admin: !!res.data.length
                 })
@@ -154,6 +153,9 @@ Page({
                 canIUseGetUserProfile: true
             })
         }
+        wx.showLoading({
+          title: '加载中',
+        })
         const userInfo = wx.getStorageSync('userInfo');
         this.setData({
             hasUserInfo: !!userInfo,
@@ -186,6 +188,7 @@ Page({
                 this.setData({
                     personReceiveState,
                 })
+                wx.hideLoading();
             }
         })
     },

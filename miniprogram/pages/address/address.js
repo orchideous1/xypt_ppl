@@ -13,7 +13,7 @@ Page({
     const {
       index
     } = e.currentTarget.dataset;
-    const { url } = this.data;
+    const url = wx.getStorageSync('urlNow')
     const address = this.data.address[index];
     wx.setStorageSync('addressNow', address);
     wx.redirectTo({
@@ -51,10 +51,8 @@ Page({
    */
   onLoad: function (options) {
     const address = wx.getStorageSync('address');
-    const { url } = options;
     this.setData({
       address,
-      url,
     })
   },
 
@@ -69,7 +67,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      address: wx.getStorageSync('address')
+    })
   },
 
   /**
@@ -83,7 +83,6 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
   },
 
   /**

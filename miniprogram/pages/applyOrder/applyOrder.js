@@ -27,6 +27,9 @@ Page({
             userInfo: that.userInfo,
             state: '待审核',
             time: getTimeNow(),
+            allMoney: 0,
+            allCount: 0,
+            allOrder: []
         },
         success: (res) => {
             // 清空输入内容

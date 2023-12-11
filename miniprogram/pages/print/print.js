@@ -64,6 +64,9 @@ Page({
         },
         // 用户信息
         userInfo,
+        // 用户手机号
+        phone: wx.getStorageSync('phone'),
+        createTime: db.serverDate()
       },
       success: (res) => {
         wx.switchTab({
@@ -89,8 +92,9 @@ Page({
   },
 
   selectAddress() {
+    wx.setStorageSync('urlNow', 'print')
     wx.redirectTo({
-      url: '../address/address?url=print',
+      url: '../address/address',
     })
   },
 

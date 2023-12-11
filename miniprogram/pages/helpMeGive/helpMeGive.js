@@ -17,8 +17,9 @@ Page({
 
 
   selectAddress() {
+    wx.setStorageSync('urlNow', 'helpMeGive')
     wx.redirectTo({
-      url: '../address/address?url=helpMeGive',
+      url: '../address/address',
     })
   },
 
@@ -55,6 +56,9 @@ Page({
         },
         // 用户信息
         userInfo,
+        // 手机号
+        phone: wx.getStorageSync('phone'),
+        createTime: db.serverDate()
       },
       success: (res) => {
         wx.switchTab({
