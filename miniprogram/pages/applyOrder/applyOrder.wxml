@@ -21,6 +21,7 @@
             <image wx:else src="{{ userIDImg }}"></image>
         </view>
     </view>
+    <!-- class加 表示多个style -->
     <view class="tips mt" bindtap="getAdminWX">
         点击复制管理员微信进行加急审核
     </view>

@@ -3,9 +3,11 @@
   box-shadow: 0 0 5rpx 5rpx #d1d1d1;
   position: absolute;
   z-index: 9999;
+  /*  */
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  /*  */
+  transform: translate(-50%, -50%);  /*  水平文档流*/
   display: flex;
   flex-direction: column;
   min-height: 400rpx;
@@ -21,13 +23,14 @@
 .modal .content {
   margin: 40rpx 30rpx 100rpx 30rpx;
   overflow: hidden;
-  word-wrap: break-word;
+  word-wrap: break-word;/*内容换行*/
+  /* 多余文字显示省略号 */
 }
 
 .modal .btn {
   display: flex;
   width: 90%;
-  position: absolute;
+  position: absolute;/*脱离文档流*/
   bottom: 40rpx;
 }
 

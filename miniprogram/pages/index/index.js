@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    banner: ['../../images/banner1.jpg', '../../images/banner2.jpg', '../../images/banner3.jpg'],
+    banner: ['../../images/banner_hit1.jpg', '../../images/banner_hit2.png', '../../images/banner3.jpg'],
     indexConfig: [{
         icon: '../../images/kuaidi.png',
         text: '快递代取',

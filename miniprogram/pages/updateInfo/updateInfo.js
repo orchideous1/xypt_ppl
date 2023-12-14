@@ -7,12 +7,12 @@ Page({
    */
   data: {
       userInfo: {},
-      phone: '',
+      //phone: '',
   },
 
   saveChange() {
       wx.setStorageSync('userInfo', this.data.userInfo);
-      wx.setStorageSync('phone', this.data.phone);
+      //wx.setStorageSync('phone', this.data.phone);
       wx.showToast({
         title: '修改成功',
       })
@@ -27,33 +27,54 @@ Page({
       })
   },
 
-  updatePhone(e) {
-      wx.cloud.callFunction({
-          name: 'getUserPhone',
-          data: {
-              cloudID: e.detail.cloudID,
-          },
-          success: (res) => {
-              this.setData({
-                  phone: res.result.list[0].data.phoneNumber,
-              })
-          }
-      })
+  // updatePhone(e) {
+  //     wx.cloud.callFunction({
+  //         name: 'getUserPhone',
+  //         data: {
+  //             cloudID: e.detail.cloudID,
+  //         },
+  //         success: (res) => {
+  //             this.setData({
+  //                 phone: res.result.list[0].data.phoneNumber,
+  //             })
+  //         }
+  //     })
+  // },
+  timeId:0,
+  updatexuehao(e){
+    let value = e.detail.value  //拿到输入框中的值
+    clearTimeout(this.timeId) //清除定时器
+    this.timeId=setTimeout(()=>{
+        this.updatexuehao_fd(value) //发送请求，间隔时间为1s
+    },1000)
   },
-
+  updatexuehao_fd(value){
+    let userInfo = this.data.userInfo;
+    userInfo.xuehao = value;
+    this.setData({
+        userInfo,
+    })
+  },
   updateNickName(e) {
-     let userInfo = this.data.userInfo;
-     userInfo.nickName = e.detail.value;
-     this.setData({
-         userInfo,
-     })
+    let value = e.detail.value  //拿到输入框中的值
+    clearTimeout(this.timeId) //清除定时器
+    this.timeId=setTimeout(()=>{
+        this.updateNickName_fd(value) //发送请求，间隔时间为1s
+    },1000)
   },
-
+  updateNickName_fd(value){
+    let userInfo = this.data.userInfo;
+    userInfo.nickName = value;
+    this.setData({
+        userInfo,
+    })
+  },
   updateAvatar() {
       let userInfo = this.data.userInfo;
-      wx.chooseImage({
+      wx.chooseMedia({
         count: 1,
         sizeType: ['original', 'compressed'],
+        mediaType:['image'],
         sourceType: ['album', 'camera'],
         success: (res) => {
           wx.showLoading({
@@ -62,7 +83,7 @@ Page({
           const random = Math.floor(Math.random() * 1000);
           wx.cloud.uploadFile({
               cloudPath: `avatar/${this.data.userInfo.nickName}-${random}.png`,
-              filePath: res.tempFilePaths[0],
+              filePath: res.tempFiles[0].tempFilePath,
               success: (res) => {
                   let fileID = res.fileID;
                   userInfo.avatarUrl = fileID;
@@ -80,12 +101,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-      const userInfo = wx.getStorageSync('userInfo');
-      const phone = wx.getStorageSync('phone');
-      this.setData({
+      var userInfo = wx.getStorageSync('userInfo');
+      //const phone = wx.getStorageSync('phone');
+      let hasuserInfo=!!userInfo;
+      if(hasuserInfo){
+        this.setData({
           userInfo,
-          phone,
-      })
+        })
+      }else{
+        userInfo=new Object();
+        this.setData({
+          userInfo,
+        })
+      }
   },
 
   /**

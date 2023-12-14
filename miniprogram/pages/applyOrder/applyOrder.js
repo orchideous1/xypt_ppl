@@ -90,9 +90,10 @@ Page({
   },
 
   uploadImg() {
-      wx.chooseImage({
+      wx.chooseMedia({
           count: 1,
           sizeType: ['compressed', 'original'],
+          mediaType:['image'],
           sourceType: ['album', 'camera'],
           success: (res) => {
               wx.showLoading({
@@ -101,7 +102,7 @@ Page({
               const random = Math.floor(Math.random() * 1000);
               wx.cloud.uploadFile({
                   cloudPath: `userIDImg/${this.data.userInfo.nickName}-${random}.png`,
-                  filePath: res.tempFilePaths[0],
+                  filePath: res.tempFiles[0].tempFilePath,
                   success: (res) => {
                       let fileID = res.fileID;
                       this.setData({

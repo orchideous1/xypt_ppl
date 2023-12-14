@@ -13,7 +13,7 @@ Page({
         // fail代表曾经申请过但是没通过
         // loading代表目前有正在审核中的
         // null代表从未申请过
-        personReceiveState: '',
+        personReceiveState: 'null',
         admin: false,
     },
 
@@ -75,12 +75,12 @@ Page({
         })
     },
 
-    getWXCustomer() {
-        wx.setClipboardData({
+    getWXCustomer() {//微信客服：赋值微信号
+        wx.setClipboardData({//将要复制的内容放在data中，就可以在小程序端复制到剪切板
             data: '18331092918',
             success: () => {
                 wx.showToast({
-                    title: '复制微信成功',
+                    title: '复制客服的微信号成功',
                 })
             }
         })
@@ -94,42 +94,53 @@ Page({
         }
     },
 
-    getPhoneNumber(e) {
-        wx.cloud.callFunction({
-            name: 'getUserPhone',
-            data: {
-                cloudID: e.detail.cloudID,
-            },
-            success: (res) => {
-                console.log(res);
-                wx.setStorageSync('phone', res.result.list[0].data.phoneNumber);
-            },
-            fail: (err) => {
-                console.log(err);
-            }
+    // getPhoneNumber(e) {
+    //     wx.cloud.callFunction({
+    //         name: 'getUserPhone',
+    //         data: {
+    //             cloudID: e.detail.cloudID,
+    //         },
+    //         success: (res) => {
+    //             console.log(res);
+    //             wx.setStorageSync('phone', res.result.list[0].data.phoneNumber);
+    //         },
+    //         fail: (err) => {
+    //             console.log(err);
+    //         }
+    //     })
+    // },
+    denglu(){
+      if(!this.data.hasUserInfo){
+        wx.navigateTo({
+          url: '../updateInfo/updateInfo',
         })
-    },
-
-    getUserProfile() {
-        wx.getUserProfile({
-            desc: '获取用户信息',
-            success: (res) => {
-                this.setData({
-                    userInfo: res.userInfo,
-                    hasUserInfo: true
-                })
-                wx.setStorageSync('userInfo', res.userInfo);
-            }
-        })
-    },
-
-    // 老接口
-    getUserInfo(e) {
+        const userInfo = wx.getStorageSync('userInfo');
         this.setData({
-            userInfo: e.detail.userInfo,
-            hasUserInfo: true
+            hasUserInfo: !!userInfo,
+            userInfo: userInfo,
         })
+      }
     },
+    // getUserProfile() {
+    //     wx.getUserProfile({
+    //         desc: '获取用户信息',
+    //         success: (res) => {
+    //             this.setData({
+    //                 userInfo: res.userInfo,
+    //                 hasUserInfo: true
+    //             })
+    //             wx.setStorageSync('userInfo', res.userInfo);
+    //         }
+    //     })
+    // },
+
+    // // 老接口
+    // getUserInfo(e) {
+    //     this.setData({
+    //         userInfo: e.detail.userInfo,
+    //         hasUserInfo: true
+    //     })
+    // },
 
     // 判断当前用户是否是管理员
     getAdminPower() {
@@ -153,9 +164,9 @@ Page({
                 canIUseGetUserProfile: true
             })
         }
-        wx.showLoading({
-          title: '加载中',
-        })
+        // wx.showLoading({
+        //   title: '加载中',
+        // })
         const userInfo = wx.getStorageSync('userInfo');
         this.setData({
             hasUserInfo: !!userInfo,

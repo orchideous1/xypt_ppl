@@ -1,12 +1,12 @@
 <view class="info" bindtap="updateInfo">
-    <image class="avatar" src="{{ hasUserInfo ? userInfo.avatarUrl : '../../images/touxiang.png' }}"></image>
+    <image class="avatar" src="{{ !!userInfo? userInfo.avatarUrl : '../../images/touxiang.png' }}"></image>
     <block wx:if="{{ !hasUserInfo }}">
-        <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"  wx:if="{{ canIUseGetUserProfile }}" bindtap="getUserProfile">点我授权</button>
-        <button wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo">点我授权</button>
+        <button bindtap='denglu'>点我登录</button>
     </block>
     <view class="name" wx:if="{{ hasUserInfo }}">
         <text>{{ userInfo.nickName }}</text>
-        <text>{{ userInfo.gender === 0 ? '男' : '女' }}</text>
+        <text>{{ userInfo.xuehao }}</text>
+        <!-- <text>{{ userInfo.gender === 0 ? '男' : '女' }}</text> -->
     </view>
     <image wx:if="{{ hasUserInfo }}" class="into" src="../../images/dayu.png"></image>
 </view>

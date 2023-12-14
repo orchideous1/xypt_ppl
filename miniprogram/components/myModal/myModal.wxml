@@ -1,4 +1,4 @@
-
+<!-- 消息提示框 -->
 <view class="modal">
     <view class="top">
         <text>{{ title }}</text>

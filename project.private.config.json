@@ -6,6 +6,41 @@
     "miniprogram": {
       "list": [
         {
+          "name": "申请接单",
+          "pathName": "pages/applyOrder/applyOrder",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "取地址",
+          "pathName": "pages/address/address",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "修改个人信息",
+          "pathName": "pages/updateInfo/updateInfo",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "个人中心",
+          "pathName": "pages/person/person",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "index",
+          "pathName": "pages/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "db guide",
           "pathName": "pages/databaseGuide/databaseGuide",
           "query": ""
