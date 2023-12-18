@@ -9,8 +9,13 @@
 </scroll-view>
 
 <view wx:if="{{ tabNow === 0 }}" class="body">
-    <view class="item" wx:for="{{ 16 }}" wx:key="index" bindtap="selectBuild" data-index="{{ index }}">
-        {{ index + 1 }} 号楼
+    <view class="item" wx:for="{{ dorm }}" wx:key="index" bindtap="selectBuild" data-index="{{ index }}">
+      {{item}}
+    </view>
+</view>
+<view wx:if="{{ tabNow === 1 }}" class="body">
+    <view class="item" wx:for="{{ teachBuilding }}" wx:key="index" bindtap="selectBuild" data-index="{{ index }}">
+        {{ item}} 
     </view>
 </view>
 

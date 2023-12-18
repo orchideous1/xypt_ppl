@@ -11,6 +11,7 @@ Page({
   },
 
   saveChange() {
+
       wx.setStorageSync('userInfo', this.data.userInfo);
       //wx.setStorageSync('phone', this.data.phone);
       wx.showToast({
@@ -51,6 +52,7 @@ Page({
   updatexuehao_fd(value){
     let userInfo = this.data.userInfo;
     userInfo.xuehao = value;
+    //console(typeof value);
     this.setData({
         userInfo,
     })
@@ -110,6 +112,7 @@ Page({
         })
       }else{
         userInfo=new Object();
+        userInfo.avatarUrl='../../images/touxiang.png';
         this.setData({
           userInfo,
         })

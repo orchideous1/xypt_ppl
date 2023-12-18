@@ -2,7 +2,7 @@
     <view class="item" bindtap="updateAvatar">
         <text>头像</text>
         <view class="right">
-            <image src="{{ !!userInfo ? userInfo.avatarUrl : '../../images/touxiang.png' }}"></image>
+            <image src="{{  userInfo.avatarUrl }}"></image>
         </view>
     </view>
     <view class="item">

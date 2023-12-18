@@ -77,7 +77,7 @@ Page({
 
     getWXCustomer() {//微信客服：赋值微信号
         wx.setClipboardData({//将要复制的内容放在data中，就可以在小程序端复制到剪切板
-            data: '18331092918',
+            data: 'Aristotle015',
             success: () => {
                 wx.showToast({
                     title: '复制客服的微信号成功',

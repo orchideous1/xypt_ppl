@@ -5,14 +5,41 @@ Page({
    * 页面的初始数据
    */
   data: {
-      tabList: ['教学区', '其它区域', '至善', '知行', '致远', '博雅', '启贤', '博艺'],
-      tabNow: 0
+      tabList: ['宿舍楼', '教学楼'],
+      tabNow: 0,
+      dorm:[
+        '荔园1栋',
+        '荔园2栋',
+        '荔园3栋',
+        '荔园4栋',
+        '荔园5栋',
+        '荔园6栋',
+        '荔园7栋',
+        '荔园8栋',
+        '荔园9栋',
+        '荔园10栋',
+      ],
+      teachBuilding:[
+        'T2',
+        'T3',
+        'T4',
+        'T5',
+        '主楼',
+        '活动中心',
+        'K栋',
+        '信息楼',
+        'A栋',
+        'F栋',
+        '操场',
+        '经管楼',
+      ]
   },
 
   selectBuild(e) {
       const index = e.currentTarget.dataset.index;
       const that = this.data;
-      const build = `${that.tabList[that.tabNow]}-${index + 1}号楼`;
+      const build = that.tabNow?that.teachBuilding[index]:that.dorm[index];
+      //`${that.tabList[that.tabNow]}-${index + 1}号楼`
       wx.navigateTo({
         url: `../addAddress/addAddress?build=${build}`
       })
