@@ -6,33 +6,49 @@ Page({
    * 页面的初始数据
    */
   data: {
-      userInfo: {},
-      phone: '',
+    userInfo: {},
+    phone: '',
   },
-
   saveChange() {
-    const that=this
-      db.collection('user').where({
-        _openid:wx.getStorageSync('openid')
-      }).update({
-        data:{
-          userInfo:that.data.userInfo
-        }
-      })
-      wx.setStorageSync('userInfo', this.data.userInfo);
-      wx.setStorageSync('phone', this.data.userInfo.phone);
+    let tmp=this.data.userInfo
+    var reg_tel = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+    if (!tmp.nickName||!tmp.xuehao||!tmp.phone){
       wx.showToast({
-        title: '修改成功',
+        title: '请填写完整信息',
+        icon:"error"
       })
-      wx.switchTab({
-        url: '../person/person',
+      return;
+    }
+    // console.log(,Number(tmp.phone))
+    if (!(reg_tel.test((tmp.phone)))){
+      wx.showToast({
+        title: '请检查手机号',
+        icon:'error'
       })
+      return;
+    }
+    const that = this
+    db.collection('user').where({
+      _openid: wx.getStorageSync('openid')
+    }).update({
+      data: {
+        userInfo: that.data.userInfo
+      }
+    })
+    wx.setStorageSync('userInfo', this.data.userInfo);
+    wx.setStorageSync('phone', this.data.userInfo.phone);
+    wx.showToast({
+      title: '修改成功',
+    })
+    wx.switchTab({
+      url: '../person/person',
+    })
   },
 
   updateAddress() {
-      wx.navigateTo({
-        url: '../address/address',
-      })
+    wx.navigateTo({
+      url: '../address/address',
+    })
   },
 
   // updatePhone(e) {
@@ -48,98 +64,98 @@ Page({
   //         }
   //     })
   // },
-  timeId:0,
-  updatePhone(e){
-    let value = e.detail.value  //拿到输入框中的值
+  timeId: 0,
+  updatePhone(e) {
+    let value = e.detail.value //拿到输入框中的值
     clearTimeout(this.timeId) //清除定时器
-    this.timeId=setTimeout(()=>{
-        this.updatePhone_fd(value) //发送请求，间隔时间为1s
-    },1000)
+    this.timeId = setTimeout(() => {
+      this.updatePhone_fd(value) //发送请求，间隔时间为1s
+    }, 1000)
   },
 
-  updatePhone_fd(value){
+  updatePhone_fd(value) {
     let userInfo = this.data.userInfo;
     userInfo.phone = value;
     //console(typeof value);
     this.setData({
-        userInfo,
+      userInfo,
     })
   },
-  updatexuehao(e){
-    let value = e.detail.value  //拿到输入框中的值
+  updatexuehao(e) {
+    let value = e.detail.value //拿到输入框中的值
     clearTimeout(this.timeId) //清除定时器
-    this.timeId=setTimeout(()=>{
-        this.updatexuehao_fd(value) //发送请求，间隔时间为1s
-    },1000)
+    this.timeId = setTimeout(() => {
+      this.updatexuehao_fd(value) //发送请求，间隔时间为1s
+    }, 1000)
   },
-  updatexuehao_fd(value){
+  updatexuehao_fd(value) {
     let userInfo = this.data.userInfo;
     userInfo.xuehao = value;
     //console(typeof value);
     this.setData({
-        userInfo,
+      userInfo,
     })
   },
   updateNickName(e) {
-    let value = e.detail.value  //拿到输入框中的值
+    let value = e.detail.value //拿到输入框中的值
     clearTimeout(this.timeId) //清除定时器
-    this.timeId=setTimeout(()=>{
-        this.updateNickName_fd(value) //发送请求，间隔时间为1s
-    },1000)
+    this.timeId = setTimeout(() => {
+      this.updateNickName_fd(value) //发送请求，间隔时间为1s
+    }, 1000)
   },
-  updateNickName_fd(value){
+  updateNickName_fd(value) {
     let userInfo = this.data.userInfo;
     userInfo.nickName = value;
     this.setData({
-        userInfo,
+      userInfo,
     })
   },
   updateAvatar() {
-      let userInfo = this.data.userInfo;
-      wx.chooseMedia({
-        count: 1,
-        sizeType: ['original', 'compressed'],
-        mediaType:['image'],
-        sourceType: ['album', 'camera'],
-        success: (res) => {
-          wx.showLoading({
-            title: '加载中',
-          })
-          const random = Math.floor(Math.random() * 1000);
-          wx.cloud.uploadFile({
-              cloudPath: `avatar/${this.data.userInfo.nickName}-${random}.png`,
-              filePath: res.tempFiles[0].tempFilePath,
-              success: (res) => {
-                  let fileID = res.fileID;
-                  userInfo.avatarUrl = fileID;
-                  this.setData({
-                      userInfo,
-                  })
-                  wx.hideLoading()
-              }
-          })
-        }
-      })
+    let userInfo = this.data.userInfo;
+    wx.chooseMedia({
+      count: 1,
+      sizeType: ['original', 'compressed'],
+      mediaType: ['image'],
+      sourceType: ['album', 'camera'],
+      success: (res) => {
+        wx.showLoading({
+          title: '加载中',
+        })
+        const random = Math.floor(Math.random() * 1000);
+        wx.cloud.uploadFile({
+          cloudPath: `avatar/${this.data.userInfo.nickName}-${random}.png`,
+          filePath: res.tempFiles[0].tempFilePath,
+          success: (res) => {
+            let fileID = res.fileID;
+            userInfo.avatarUrl = fileID;
+            this.setData({
+              userInfo,
+            })
+            wx.hideLoading()
+          }
+        })
+      }
+    })
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-      var userInfo = wx.getStorageSync('userInfo');
-      //const phone = wx.getStorageSync('phone');
-      let hasuserInfo=!!userInfo;
-      if(hasuserInfo){
-        this.setData({
-          userInfo,
-        })
-      }else{
-        userInfo=new Object();
-        userInfo.avatarUrl='../../images/touxiang.png';
-        this.setData({
-          userInfo,
-        })
-      }
+    var userInfo = wx.getStorageSync('userInfo');
+    //const phone = wx.getStorageSync('phone');
+    let hasuserInfo = !!userInfo;
+    if (hasuserInfo) {
+      this.setData({
+        userInfo,
+      })
+    } else {
+      userInfo = new Object();
+      userInfo.avatarUrl = '../../images/touxiang.png';
+      this.setData({
+        userInfo,
+      })
+    }
   },
 
   /**

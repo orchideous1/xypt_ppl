@@ -1,0 +1,87 @@
+<!--pages/check/check.wxml-->
+<!-- <text>pages/check/check.wxml</text> -->
+
+<scroll-view scroll-x class="scroll_view">
+  <view class="tab">
+    <view class="tab_item {{ tabNow === index ? 'select' : '' }}" wx:for="{{ tabList }}" data-id="{{ index }}" wx:key="index" bindtap="selectTab">
+      {{ item }}
+    </view>
+  </view>
+</scroll-view>
+
+<view wx:if="{{tabNow==1}}" class="body">
+  <image class="noneImg" src="../../images/none.png" wx:if="{{ receiverVerify.length === 0}}"></image>
+  <view class="noneData" wx:if="{{ receiverVerify.length === 0 }}">
+    -- 暂无数据 --</view>
+
+  <view class="container" wx:for="{{receiverVerify}}" wx:key="index">
+    <view class="content">
+      <view class="userImg">
+        <image src="{{item.userInfo.avatarUrl}}" mode="" />
+      </view>
+      <view class="text">
+        <view class="header">
+          <text>{{item.userInfo.nickName}}</text>
+          <text>{{item.time}}</text>
+        </view>
+        <view class="detail" wx:if="{{item.unfold}}">
+          <text>姓名: {{item.name}}</text>
+          <text>证件号: {{item.userID}}</text>
+          <text>证件照: </text>
+          <image src="{{item.userIDImg}}" mode="" bind:tap="imgDetail" data-url="{{item.userIDImg}}"/>
+          <view>
+            <button bind:tap="accept" data-id="{{index}}" data-result="通过">通过</button>
+            <button bind:tap="accept" data-id="{{index}}" data-result="不通过">不通过</button>
+          </view>
+        </view>
+        
+      </view>
+    </view>
+
+    <view class="unfold" bind:tap="unfold" data-id="{{index}}">{{item.unfold?"收起":"展开"}}</view>
+  </view>
+
+
+  <view class="showAll">
+    ———— <text>已显示全部</text> ————
+  </view>
+</view>
+
+<view wx:if="{{tabNow==0}}" class="body">
+  <image class="noneImg" src="../../images/none.png" wx:if="{{ studentVerify.length === 0}}"></image>
+  <view class="noneData" wx:if="{{ studentVerify.length === 0 }}">
+    -- 暂无数据 --</view>
+
+  <view class="container" wx:for="{{studentVerify}}" wx:key="index">
+    <view class="content">
+      <view class="userImg">
+        <image src="{{item.userInfo.avatarUrl}}" mode="" />
+      </view>
+      <view class="text">
+        <view class="header">
+          <text>{{item.userInfo.nickName}}</text>
+          <text>{{item.time}}</text>
+        </view>
+        <view class="detail" wx:if="{{item.unfold}}">
+          <text>入学时间: {{item.year}}</text>
+          <text>学号: {{item.userInfo.xuehao}}</text>
+          <text>学生证明: </text>
+          <image src="{{item.imageUrl}}" mode="" bind:tap="imgDetail" data-url="{{item.imageUrl}}"/>
+          <view>
+            <button bind:tap="accept" data-id="{{index}}" data-result="通过">通过</button>
+            <button bind:tap="accept" data-id="{{index}}" data-result="不通过">不通过</button>
+          </view>
+          
+        </view>
+        
+      </view>
+    </view>
+
+    <view class="unfold" bind:tap="unfold" data-id="{{index}}">{{item.unfold?"收起":"展开"}}</view>
+  </view>
+
+
+  <view class="showAll">
+    ———— <text>已显示全部</text> ————
+  </view>
+</view>

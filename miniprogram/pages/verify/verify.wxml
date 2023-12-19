@@ -19,7 +19,7 @@
 
   <view class="content">
     <text>*</text>
-    <text>请提供学生证、电子校园卡或者有效的学生证明</text>
+    <text>请提供学生证、电子校园卡或者有效的学生证明(必须显示出姓名和学号)</text>
   </view>
   <view class="uploadImg" style="background-color: rgba(135, 207, 235, 0.726);">
     <image src="{{imageUrl}}" catch:tap="uploadImg" />

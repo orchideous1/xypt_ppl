@@ -17,6 +17,7 @@ Page({
   },
 
   saveAddress() {
+    var reg_tel = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
       const {
           build,
           houseNumber,
@@ -27,6 +28,19 @@ Page({
           editNow,
           index,
       } = this.data;
+      if (!build||!houseNumber||!name||!phone){
+        wx.showToast({
+          title: '请填写完整信息',
+          icon:'error'
+        })
+        return;
+      }else if (!(reg_tel.test((phone)))){
+        wx.showToast({
+          title: '请检查手机号',
+          icon:'error'
+        })
+        return;
+      }
       let address = wx.getStorageSync('address');
               if (!isEdit && defalutAddress && address) {
                   for (let i = 0; i < address.length; i++) {

@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    canPublish:false,
     banner: ['../../images/banner_hit1.jpg', '../../images/banner_hit2.png', '../../images/banner3.jpg'],
     indexConfig: [{
         icon: '../../images/kuaidi.png',
@@ -55,6 +56,13 @@ Page({
   },
 
   toDetail(e) {
+    if (!this.data.canPublish){
+      wx.showToast({
+        title: '请先完成认证',
+        icon:"error"
+      })
+      return;
+    }
     const userInfo = wx.getStorageSync('userInfo');
     const url = e.currentTarget.dataset.url;
     if (userInfo) {
@@ -76,11 +84,30 @@ Page({
     })
   },
 
+  check(){
+    const that=this
+    wx.cloud.database().collection("studentVerify").where({
+      _openid:wx.getStorageSync('openid'),
+      state:"通过",
+    }).get({
+      success:(res)=>{
+        that.setData({
+          canPublish:true
+        })
+        console.log(that.data.canPublish)
+      },
+      fail:(res)=>{
+        console.log(res)
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     const openid = wx.getStorageSync('openid');
+    const that=this
+    
     if (!openid) {
       wx.cloud.callFunction({
         name: 'UserOpenId',
@@ -89,8 +116,11 @@ Page({
             openid
           } = res.result;
           wx.setStorageSync('openid', openid);
+          that.check()
         }
       })
+    }else{
+      this.check()
     }
   },
 

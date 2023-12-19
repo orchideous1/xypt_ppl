@@ -1,4 +1,7 @@
 // pages/verify/verify.js
+const db=wx.cloud.database()
+import { getTimeNow } from '../../utils/index';
+
 Page({
 
   /**
@@ -16,6 +19,30 @@ Page({
         console.log(e)
         that.setData({
           imageUrl:e.tempFilePaths[0]
+        })
+      }
+    })
+  },
+  submit(){
+    let that=this
+    if (this.data.imageUrl=="/images/身份证正面.png"){
+      wx.showToast({
+        title: '请上传学生证明',
+        icon:"none"
+      })
+      return;
+    }
+    db.collection("studentVerify").add({
+      data:{
+        state:"待审核",
+        userInfo:wx.getStorageSync('userInfo'),
+        year:that.data.dateArray[that.data.dateIndex],
+        imageUrl:that.data.imageUrl,
+        time: getTimeNow(),
+      },
+      success:(res)=>{
+        wx.navigateBack({
+          delta:1
         })
       }
     })

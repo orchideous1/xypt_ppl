@@ -14,6 +14,7 @@ Page({
         // loading代表目前有正在审核中的
         // null代表从未申请过
         personReceiveState: 'null',
+        personStudentState: 'null',
         admin: false,
     },
 
@@ -26,14 +27,47 @@ Page({
           })
           return;
       }
+      const 
+        personReceiveState
+     = this.data.personStudentState;
+    console.log(personReceiveState)
+    if (personReceiveState === 'success') {
+        wx.showModal({
+            title: '提示',
+            content: '您已经完成学生认证了, 请勿重复申请!',
+            showCancel: false
+        })
+    } else if (personReceiveState === 'fail') {
+        wx.showModal({
+            title: '提示',
+            content: '您之前提交的申请未通过审核, 您可以继续申请, 如有疑问请联系管理员: 18331092918',
+            success: (res) => {
+                const {
+                    confirm
+                } = res;
+                if (confirm) {
+                    wx.navigateTo({
+                        url: '../verify/verify',
+                    })
+                }
+            }
+        })
+    } else if (personReceiveState === 'loading') {
+        wx.showModal({
+            title: '提示',
+            content: '您之前申请的内容正在审核中, 请耐心等待! 如加急审核请添加管理员微信: 18331092918',
+            showCancel: false,
+        })
+    } else if (personReceiveState === 'null') {
         wx.navigateTo({
           url: '../verify/verify',
         })
+    }
     },
 
     orderReceiver() {
         wx.navigateTo({
-            url: '../orderReceiver/orderReceiver',
+            url: '../check/check',
         })
     },
 
@@ -165,6 +199,38 @@ Page({
     //     })
     // },
 
+    getStudentPower(){
+      let personReceiveState=''
+      db.collection("studentVerify").where({
+        _openid: wx.getStorageSync('openid')
+    }).get({
+        success: (res) => {
+            const {
+                data
+            } = res;
+            console.log(data)
+            if (data.length) {
+                for (let i = 0; i < data.length; i++) {
+                    if (data[i].state === '通过') {
+                        personReceiveState = 'success';
+                        break;
+                    } else if (data[i].state === '不通过') {
+                        personReceiveState = 'fail';
+                    } else {
+                        personReceiveState = 'loading';
+                        break;
+                    }
+                }
+            } else {
+                personReceiveState = 'null';
+            }
+            this.setData({
+                personStudentState:personReceiveState,
+            })
+            wx.hideLoading();
+        }
+    })
+    },
     // 判断当前用户是否是管理员
     getAdminPower() {
         db.collection('admin').where({
@@ -182,11 +248,11 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        if (wx.getUserProfile) {
-            this.setData({
-                canIUseGetUserProfile: true
-            })
-        }
+        // if (wx.getUserProfile) {
+        //     this.setData({
+        //         canIUseGetUserProfile: true
+        //     })
+        // }
         // wx.showLoading({
         //   title: '加载中',
         // })
@@ -196,7 +262,9 @@ Page({
             userInfo: userInfo,
         })
         let personReceiveState = '';
+        this.getStudentPower();
         this.getAdminPower();
+        console.log(this.data.personStudentState)
         db.collection('orderReceive').where({
             _openid: wx.getStorageSync('openid')
         }).get({
