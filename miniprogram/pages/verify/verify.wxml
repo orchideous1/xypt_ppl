@@ -1,0 +1,37 @@
+<!--pages/verify/verify.wxml-->
+<!-- <text>pages/verify/verify.wxml</text> -->
+
+<view class="container">
+
+  <view class="body">
+    <view class="content">
+      <text>*</text>
+      <text>入学年份</text>
+    </view>
+    <view class="select">
+      <picker mode="selector" value="{{dateIndex}}" range="{{dateArray}}" bindchange="selectDate">
+        <text class="time">{{dateArray[dateIndex]}}</text>
+        <image src="../../images/dayu.png" mode="" style="background-color: silver;" />
+      </picker>
+    </view>
+  </view>
+
+
+  <view class="content">
+    <text>*</text>
+    <text>请提供学生证、电子校园卡或者有效的学生证明</text>
+  </view>
+  <view class="uploadImg" style="background-color: rgba(135, 207, 235, 0.726);">
+    <image src="{{imageUrl}}" catch:tap="uploadImg" />
+  </view>
+</view>
+
+<view class="statement">
+  <text>关于隐私保护</text>
+  <view class="main">
+    <text>除了国家机构、公安机关外，您的身份资料不会被泄露给任何人。</text>
+    <text>您的用户信息受相关法律保护，将严格保密</text>
+  </view>
+</view>
+
+<button bind:tap="submit">提交</button>

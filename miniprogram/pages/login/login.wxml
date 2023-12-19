@@ -1,3 +1,6 @@
+<!--pages/login/login.wxml-->
+<!-- <text>pages/login/login.wxml</text> -->
+
 <view class="info" >
     <view class="item" bindtap="updateAvatar">
         <text>头像</text>
@@ -25,19 +28,9 @@
     </view>
 </view>
 
-<view class="address">
-    <view class="items" bindtap="updateAddress">
-        <view class="left">
-            <image src="../../images/address.png"></image>
-            <text>我的地址</text>
-        </view>
-        <view class="right">
-            <text>></text>
-        </view>
-    </view>
-</view>
+
 
 
 <view class="btn">
-    <button bindtap="saveChange">保存修改</button>
+    <button bindtap="saveChange">登录/注册</button>
 </view>

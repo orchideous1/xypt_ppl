@@ -1,4 +1,4 @@
-const db = wx.cloud.database()
+const db=wx.cloud.database()
 // pages/updateInfo/updateInfo.js
 Page({
 
@@ -6,15 +6,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-      userInfo: {},
+      userInfo: {
+        avatarUrl:'../../images/touxiang.png'
+      },
       phone: '',
   },
 
+
+
   saveChange() {
-    const that=this
-      db.collection('user').where({
-        _openid:wx.getStorageSync('openid')
-      }).update({
+      const that=this
+      db.collection('user').add({
         data:{
           userInfo:that.data.userInfo
         }
@@ -49,6 +51,7 @@ Page({
   //     })
   // },
   timeId:0,
+
   updatePhone(e){
     let value = e.detail.value  //拿到输入框中的值
     clearTimeout(this.timeId) //清除定时器
@@ -65,6 +68,7 @@ Page({
         userInfo,
     })
   },
+
   updatexuehao(e){
     let value = e.detail.value  //拿到输入框中的值
     clearTimeout(this.timeId) //清除定时器
@@ -126,20 +130,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-      var userInfo = wx.getStorageSync('userInfo');
-      //const phone = wx.getStorageSync('phone');
-      let hasuserInfo=!!userInfo;
-      if(hasuserInfo){
-        this.setData({
-          userInfo,
-        })
-      }else{
-        userInfo=new Object();
-        userInfo.avatarUrl='../../images/touxiang.png';
-        this.setData({
-          userInfo,
-        })
-      }
+      // var userInfo = wx.getStorageSync('userInfo');
+      // //const phone = wx.getStorageSync('phone');
+      // let hasuserInfo=!!userInfo;
+      // if(hasuserInfo){
+      //   this.setData({
+      //     userInfo,
+      //   })
+      // }else{
+      //   userInfo=new Object();
+      //   userInfo.avatarUrl='../../images/touxiang.png';
+      //   this.setData({
+      //     userInfo,
+      //   })
+      // }
   },
 
   /**

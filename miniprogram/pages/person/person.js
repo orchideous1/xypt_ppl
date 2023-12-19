@@ -17,6 +17,20 @@ Page({
         admin: false,
     },
 
+    verify(){
+      const userInfo = wx.getStorageSync('userInfo');
+      if (!userInfo) {
+          wx.showToast({
+            icon: 'none',
+            title: '请先登录!',
+          })
+          return;
+      }
+        wx.navigateTo({
+          url: '../verify/verify',
+        })
+    },
+
     orderReceiver() {
         wx.navigateTo({
             url: '../orderReceiver/orderReceiver',
@@ -110,14 +124,23 @@ Page({
     //     })
     // },
     denglu(){
+      const openid=wx.getStorageSync('openid')
+      // console.log(openid)
       if(!this.data.hasUserInfo){
-        wx.navigateTo({
-          url: '../updateInfo/updateInfo',
-        })
-        const userInfo = wx.getStorageSync('userInfo');
-        this.setData({
-            hasUserInfo: !!userInfo,
-            userInfo: userInfo,
+        db.collection('user').where({_openid: openid}).get({
+          success:(res)=>{
+            const{data}=res;
+            console.log(data);
+            wx.setStorageSync('userInfo', data[0].userInfo)
+            wx.setStorageSync('phone', data[0].userInfo.phone)
+            this.onLoad()
+          },
+          fail:()=>{
+            wx.navigateTo({
+              url: '../login/login',
+            })
+            this.onLoad()
+          }
         })
       }
     },

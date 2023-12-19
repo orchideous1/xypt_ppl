@@ -93,7 +93,7 @@ Page({
         // 用户信息
         userInfo: that.userInfo,
         // 用户手机号
-        phone: wx.getStorageSync('phone'),
+        phone: wx.getStorageSync('addressNow').phone,
         createTime: db.serverDate()
       },
       success: (res) => {

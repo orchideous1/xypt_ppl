@@ -9,7 +9,7 @@
   <text>哈深校园跑腿，闪亮登场</text>
 </view>
 
-<view class="container">
+<!-- <view class="container">
   <view class="body" wx:for="{{ indexConfig }}" wx:key="index" data-url="{{ item.url }}" bindtap="toDetail">
     <view class="circleBorder">
       <view class="icon">
@@ -18,4 +18,17 @@
     </view>
     <text class="text">{{ item.text }}</text>
   </view>
+</view> -->
+
+
+<view class="item_container">
+  <view class="item_body" wx:for="{{indexConfig}}" wx:key="index" data-url="{{item.url}}" bind:tap="toDetail">
+      <view style="opacity: 0.4; background-color: #fff;">
+        <image src="{{item.icon}}"mode=""/>
+      </view>
+      <view class="main_body">
+        <text>{{item.text}}</text>
+      </view>
+  </view>
+ 
 </view>

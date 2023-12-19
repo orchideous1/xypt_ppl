@@ -24,7 +24,9 @@
     "pages/orderReceiver/orderReceiver",
     "pages/receiveLoading/receiveLoading",
     "components/myButton/myButton",
-    "components/myModal/myModal"
+    "components/myModal/myModal",
+    "pages/verify/verify",
+    "pages/login/login"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

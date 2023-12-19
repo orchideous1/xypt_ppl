@@ -19,6 +19,14 @@
     <text class="cellRight">></text>
 </button>
 
+<button class="cell" bindtap="verify">
+    <view class="cellLeft">
+        <image src="../../images/apply.png"></image>
+        <text>学生认证</text>
+    </view>
+    <text class="cellRight">></text>
+</button>
+
 <button class="cell mt" bindtap="orderReceiver" wx:if="{{ admin }}">
     <view class="cellLeft">
         <image src="../../images/check.png"></image>
@@ -38,6 +46,7 @@
         </view>
         <text class="cellRight">></text>
     </button>
+
     <button class="cell" open-type="contact">
         <view class="cellLeft">
             <image src="../../images/customService.png"></image>

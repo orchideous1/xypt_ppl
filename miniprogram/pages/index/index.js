@@ -18,7 +18,7 @@ Page({
       },
       {
         icon: '../../images/paotui.png',
-        text: '校园跑腿',
+        text: '饭堂带餐',
         url: '../run/run',
       },
       {
@@ -31,21 +31,21 @@ Page({
         text: '租借服务',
         url: '../lease/lease',
       },
-      {
-        icon: '../../images/youxi.png',
-        text: '游戏陪玩',
-        url: '../playGame/playGame',
-      },
-      {
-        icon: '../../images/bangsong.png',
-        text: '帮我送',
-        url: '../helpMeGive/helpMeGive',
-      },
-      {
-        icon: '../../images/daiti.png',
-        text: '代替服务',
-        url: '../replaceMe/replaceMe',
-      },
+      // {
+      //   icon: '../../images/youxi.png',
+      //   text: '游戏陪玩',
+      //   url: '../playGame/playGame',
+      // },
+      // {
+      //   icon: '../../images/bangsong.png',
+      //   text: '帮我送',
+      //   url: '../helpMeGive/helpMeGive',
+      // },
+      // {
+      //   icon: '../../images/daiti.png',
+      //   text: '代替服务',
+      //   url: '../replaceMe/replaceMe',
+      // },
       {
         icon: '../../images/qita.png',
         text: '其它帮助',

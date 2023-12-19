@@ -1,4 +1,4 @@
-
+const db=wx.cloud.database()
 // pages/addAddress/addAddress.js
 Page({
 
@@ -56,6 +56,14 @@ Page({
           }
       }
       wx.setStorageSync('address', address);
+      db.collection('user').where({
+        _openid:wx.getStorageSync('openid')
+      }).update({
+        data:{
+          userInfo:wx.getStorageSync('userInfo'),
+          address:address
+        }
+      })
       wx.navigateBack({
           delta: 3
       })
@@ -126,6 +134,7 @@ Page({
       } else {
           this.setData({
               build,
+              phone:wx.getStorageSync('phone')
           })
       }
   

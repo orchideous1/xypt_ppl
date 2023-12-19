@@ -13,7 +13,7 @@ Page({
     rewardOrder: [],
     helpOrder: [],
     openid: '',
-    canReceive: false,
+    canReceive: true,
     helpTotalNum: 0,
     helpTotalMoeny: 0
   },
@@ -381,7 +381,7 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-    this.getPersonPower();
+    // this.getPersonPower();
     db.collection('order').orderBy('createTime', 'desc').get({
       success: (res) => {
         const {

@@ -1,4 +1,5 @@
 // pages/address/address.js
+const db=wx.cloud.database()
 Page({
 
   /**
@@ -34,6 +35,14 @@ Page({
     const address = this.data.address;
     address.splice(index, 1);
     wx.setStorageSync('address', address);
+    db.collection('user').where({
+      _openid:wx.getStorageSync('openid')
+    }).update({
+      data:{
+        userInfo:wx.getStorageSync('userInfo'),
+        address:address
+      }
+    })
     wx.showToast({
       title: '删除成功',
     })
@@ -50,6 +59,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    db.collection('user').where({
+      _openid:wx.getStorageSync('openid')
+    }).get({
+      success:(res)=>{
+        console.log(res)
+        wx.setStorageSync('address', res.data[0].address)
+      }
+    })
     const address = wx.getStorageSync('address');
     this.setData({
       address,
